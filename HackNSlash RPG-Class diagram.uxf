@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.2">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>370</x>
+      <y>110</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Entity
+--
+int Health
+int Dmg
+int Level
+int MaxHealth
+--
++Health():int
++Attack():int
+-DmgCalc():int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>120</x>
+      <y>110</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Main
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>240</x>
+      <y>390</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Player
+--
+int Regen
+--
++Regen(int PlayerHealth):int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>500</x>
+      <y>390</y>
+      <w>210</w>
+      <h>190</h>
+    </coordinates>
+    <panel_attributes>Monster
+--
+
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>510</x>
+      <y>270</y>
+      <w>110</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+1
+*</panel_attributes>
+    <additional_attributes>30;30;90;120</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>310</x>
+      <y>270</y>
+      <w>120</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+1
+1</panel_attributes>
+    <additional_attributes>100;30;30;120</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>300</x>
+      <y>150</y>
+      <w>90</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+1    *</panel_attributes>
+    <additional_attributes>70;50;30;50</additional_attributes>
+  </element>
+</diagram>
