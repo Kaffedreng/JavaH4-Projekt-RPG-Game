@@ -9,9 +9,6 @@ package hacknslash.randerstypen;
  *
  * @author jan
  */
-public class FileWorker {
+class ArraList<T> {
     
-    public void Load(int MapLevel) {
-    
-    }
 }
