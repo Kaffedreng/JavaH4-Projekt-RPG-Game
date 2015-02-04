@@ -24,6 +24,8 @@ public class Entity {
     }
     
     public int Attack() {
+        System.out.println("Attack mothod");
+        System.out.println(EntityName);
         return DamageCalculator();
     }
     
@@ -35,8 +37,10 @@ public class Entity {
         return Level;
     }
     
-    private int DamageCalculator() {
-        return (Helpers.RndInt(Level));
+    int DamageCalculator() {
+        int Damage = Helpers.RndInt(Level);
+        System.out.println(Damage);
+        return Damage;
     }
 
     void DamageTaken(int Damage) {

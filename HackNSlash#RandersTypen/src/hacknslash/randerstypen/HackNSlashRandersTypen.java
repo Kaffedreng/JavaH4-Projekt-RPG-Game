@@ -115,7 +115,7 @@ public class HackNSlashRandersTypen {
     
     private static void LoadGame(String Username) {
         try {
-            String SQLStatement_GetDetails = "SELECT Name, Level, Experience, MapLevel, CurrentPosition, Health FROM players WHERE Name='" + Username + "' LIMIT 1;";
+            String SQLStatement_GetDetails = "SELECT Name, Level, Experience, MapLevel, CurrentPosition, Health, Mana FROM players WHERE Name='" + Username + "' LIMIT 1;";
             
             SQLSelect SQLUserDetails = new SQLSelect(SQLStatement_GetDetails);
             ArrayList PlayerDetails = SQLUserDetails.ResultListOfLists.get(0);
@@ -124,7 +124,8 @@ public class HackNSlashRandersTypen {
                     PlayerDetails.get(2).toString(),
                     PlayerDetails.get(3).toString(),
                     PlayerDetails.get(4).toString(),
-                    PlayerDetails.get(5).toString());
+                    PlayerDetails.get(5).toString(),
+                    PlayerDetails.get(6).toString());
             
             
         } catch (SQLException ex) {
@@ -167,8 +168,10 @@ public class HackNSlashRandersTypen {
         boolean MapNotFinished = true;
         do {
             MyPlayer.SetPos(CurrentMap.Move(MyPlayer.CurrPos()));
+            System.out.println(MyPlayer.LastPos());
             boolean Win = false;
             if(!Helpers.RndBool()) {
+                System.out.println("Combat mode initiated");
                 if(CombatMode()) {
                     MyPlayer.GiveExp(MyPlayer.MapLevel());
                 }
@@ -188,21 +191,25 @@ public class HackNSlashRandersTypen {
     //not yet finished
     private static boolean CombatMode() {
         boolean PlayerAttackFirst = Helpers.RndBool();
+        System.out.println("Player attacks first: " + PlayerAttackFirst);
         boolean MonsterDied = false;
+        
         int Damage = 0;
         Monster MyMonster = new Monster(MyPlayer.MapLevel());
-        if(!PlayerAttackFirst) {
+        System.out.println(MyMonster.EntityName);
+        
+        if(true) {
+        //if(!PlayerAttackFirst) {
+            System.out.println("Monster Attacks");
             Damage = MyMonster.Attack();
             MyPlayer.DamageTaken(Damage);
+            System.out.println("Monster damage:" + Damage);
         }
-        
+        System.out.println("Combat loop");
         do {
-            Damage = 0;
-            //myplayer attack needs to give you 3 attack optiens 
-            //1. normal attack
-            //2. kick
-            //3. defend or stuff
+           Damage = 0;
            Damage = MyPlayer.Attack();
+           System.out.println("Damage to monster:" + Damage);
            MyMonster.DamageTaken(Damage);
            MonsterDied = (MyMonster.Health() <= 0);
            if(!MonsterDied) {

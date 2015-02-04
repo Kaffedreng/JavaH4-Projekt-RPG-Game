@@ -26,8 +26,10 @@ public class FileWorker {
         } catch (IOException ex) {
             Logger.getLogger(FileWorker.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println(Lines);
+        
+        
         for (String Line : Lines) {
+            System.out.println(Line);
             ArrayList<String> row = new ArrayList<>(Line.length());
             for(String MyChar : Line.split("")) {
                 row.add(MyChar);

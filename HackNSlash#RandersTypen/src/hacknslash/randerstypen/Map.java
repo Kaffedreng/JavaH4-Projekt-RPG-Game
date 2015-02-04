@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +24,7 @@ public class Map {
     ArrayList<ArrayList<String>> MapArray = null;
     public Map(int MapLevel) {
         
-        Collections.reverse(MapArray = FileWorker.Load(MapLevel));
+        MapArray = FileWorker.Load(MapLevel);
       
         //need file reader for this to work and some maps
         //magical stuff makes this work! now questions asked please...
@@ -36,12 +38,33 @@ public class Map {
         x = Integer.parseInt(XY[0]);
         y = Integer.parseInt(XY[1]);
         
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        int result;
+        boolean Answer = false;
+        String NewPoss = null;
         
-        boolean Up = (!"#".equals(MapArray.get(y + 1).get(x)));
-        boolean Down = (!"#".equals(MapArray.get(y - 1).get(x)));
-        boolean Left = (!"#".equals(MapArray.get(x - 1).get(y)));
-        boolean Right = (!"#".equals(MapArray.get(x - 1).get(y)));
+        MapArray.get(x).set(y, "*");
+        System.out.println();
+        ArrayList<String> myPrint = new ArrayList<>();
+        
+        for(ArrayList<String> row : MapArray) {
+            String myString = "";
+            for(String myLetter : row) {
+                   myString += myLetter; 
+                }
+            myPrint.add(myString);
+        }
+        for(String myString : myPrint) {
+            System.out.println(myString);
+        }
+        
+        do {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        System.out.print("Your coordinates are: " + x + "," + y );
+
+        boolean Down  = (!"#".equals(MapArray.get(x + 1).get(y)));
+        boolean Up = (!"#".equals(MapArray.get(x - 1).get(y)));
+        boolean Right = (!"#".equals(MapArray.get(x).get(y + 1)));
+        boolean Left = (!"#".equals(MapArray.get(x).get(y - 1)));
         
         //print user optioens
         System.out.println((Up) ? "1. You can go up" : "1. You cannot go up");
@@ -51,39 +74,47 @@ public class Map {
         
         String line = in.readLine();
         
-        int result;
-        boolean Answer = false;
-        String NewPoss = null;
-        
         try {
             result = Integer.parseInt(line);
         } catch (NumberFormatException exception) {
             result = 0;
         }
-        do {
+        
             switch (result){
                 case 1:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = !Up;
-                         NewPoss = x + "," + y;
+                         if(Up){
+                            Answer = true;
+                            x--;
+                            NewPoss = x + "," + y;
+                         }
                          break;
                 case 2:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = !Down;
-                         NewPoss = x + "," + y;
+                         if(Down){
+                            x++;
+                            Answer = true;
+                            NewPoss = x + "," + y;
+                         }
                          break;
                 case 3:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = !Left;
-                         NewPoss = x + "," + y;
+                         if(Left){
+                            y--;
+                            Answer = true;
+                            NewPoss = x + "," + y;
+                         }
                          break;
                 case 4:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = !Right;
-                         NewPoss = x + "," + y;
+                         if(Right){
+                            y++;
+                            Answer = true;
+                            NewPoss = x + "," + y;
+                         }
                          break;
                 default:
                          System.out.println("Your input is not valid! - Please try again.");
                          break;
             }
         } while(!Answer);
-        
+
        
         return NewPoss;
     }
@@ -97,6 +128,8 @@ public class Map {
         int y = Integer.parseInt(XY[1]);
         
         MapCompleted = ("c".equals(MapArray.get(x).get(y)));
+        
+        System.out.println("You have swag!");
         
         return MapCompleted;
     }
