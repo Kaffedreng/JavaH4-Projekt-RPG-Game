@@ -79,6 +79,7 @@ public class HackNSlashRandersTypen {
         
         do {
             try {
+                System.out.println("Type username:");
                 Username = ReadUsername();
             } catch (IOException ex) {
                 Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,6 +92,8 @@ public class HackNSlashRandersTypen {
             String SQLStatement_AddUser = "INSERT INTO players (Name) VALUES ('" + Username + "')";
             SQLInsert SQLInsertUser = new SQLInsert(SQLStatement_AddUser);
         }
+        
+        LoadGame(Username);
     }
     
     private static String ReadUsername() throws IOException {
@@ -117,11 +120,11 @@ public class HackNSlashRandersTypen {
             SQLSelect SQLUserDetails = new SQLSelect(SQLStatement_GetDetails);
             ArrayList PlayerDetails = SQLUserDetails.ResultListOfLists.get(0);
             MyPlayer = new Player(PlayerDetails.get(0).toString(), 
-                    Integer.parseInt(PlayerDetails.get(1).toString()),
-                    Integer.parseInt(PlayerDetails.get(2).toString()),
-                    Integer.parseInt(PlayerDetails.get(3).toString()),
+                    PlayerDetails.get(1).toString(),
+                    PlayerDetails.get(2).toString(),
+                    PlayerDetails.get(3).toString(),
                     PlayerDetails.get(4).toString(),
-                    Integer.parseInt(PlayerDetails.get(5).toString()));
+                    PlayerDetails.get(5).toString());
             
             
         } catch (SQLException ex) {
@@ -183,9 +186,9 @@ public class HackNSlashRandersTypen {
     //not yet finished
     private static boolean CombatMode() {
         boolean PlayerAttackFirst = Helpers.RndBool();
-        boolean EntityDied = false;
+        boolean MonsterDied = false;
         int Damage = 0;
-        Entity MyMonster = new Entity(MyPlayer.MapLevel());
+        Monster MyMonster = new Monster(MyPlayer.MapLevel());
         if(!PlayerAttackFirst) {
             Damage = MyMonster.Attack();
             MyPlayer.DamageTaken(Damage);
@@ -199,14 +202,14 @@ public class HackNSlashRandersTypen {
             //3. defend or stuff
            Damage = MyPlayer.Attack();
            MyMonster.DamageTaken(Damage);
-           EntityDied = (MyMonster.Health() <= 0);
-           if(!EntityDied) {
+           MonsterDied = (MyMonster.Health() <= 0);
+           if(!MonsterDied) {
                Damage = 0;
                Damage = MyMonster.Attack();
                MyPlayer.DamageTaken(Damage);
-               EntityDied = (MyPlayer.Health() <= 0);
+               MonsterDied = (MyPlayer.Health() <= 0);
            }
-        } while(!EntityDied);
+        } while(!MonsterDied);
         return (MyPlayer.Health() > 0);
     }  
 }

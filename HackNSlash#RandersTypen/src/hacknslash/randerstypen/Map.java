@@ -63,19 +63,19 @@ public class Map {
         do {
             switch (result){
                 case 1:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = true;
+                         Answer = !Up;
                          NewPoss = x + "," + y;
                          break;
                 case 2:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = true;
+                         Answer = !Down;
                          NewPoss = x + "," + y;
                          break;
                 case 3:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = true;
+                         Answer = !Left;
                          NewPoss = x + "," + y;
                          break;
                 case 4:  System.out.print("Your coordinates are: " + x + "," + y );
-                         Answer = true;
+                         Answer = !Right;
                          NewPoss = x + "," + y;
                          break;
                 default:
@@ -89,6 +89,15 @@ public class Map {
     }
 
     boolean HasChest(String CurrPos) {
-        return false;
+        boolean MapCompleted = false;
+        
+        String[] XY = CurrPos.split(",");
+        
+        int x = Integer.parseInt(XY[0]);
+        int y = Integer.parseInt(XY[1]);
+        
+        MapCompleted = ("c".equals(MapArray.get(x).get(y)));
+        
+        return MapCompleted;
     }
 }

@@ -9,6 +9,13 @@ package hacknslash.randerstypen;
  *
  * @author jan
  */
-class ArraList<T> {
+public class Monster extends Entity {
+
+    public Monster(int MapLevel) {
+        this.EntityName = "Pikachu";
+        this.Level = MapLevel + Helpers.RndInt(5);
+        this.MaxHealth = this.Level * 10;
+        MaxHealth();
+    }
     
 }

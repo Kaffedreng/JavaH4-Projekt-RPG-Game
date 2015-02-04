@@ -19,25 +19,12 @@ public class Entity {
     int MaxHealth;
     String EntityName;
 
-    public Entity(int MapLevel) {
-        this.EntityName = "Pikachu";
-        this.Level = MapLevel + Rnd();
-        this.MaxHealth = this.Level * 10;
-        MaxHealth();
-    }
-    
-    public static int Rnd(int i) {
-        Random rand = new Random();
-        return rand.nextInt(i);
-    }
-    
     public void MaxHealth() {
         this.Health = MaxHealth;
     }
     
     public int Attack() {
-        DamageCalculator();
-        return 0;
+        return DamageCalculator();
     }
     
     public int Health() {
@@ -49,15 +36,11 @@ public class Entity {
     }
     
     private int DamageCalculator() {
-        return 0;
+        return (Helpers.RndInt(Level));
     }
 
     void DamageTaken(int Damage) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    private int Rnd() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Health = Health - Damage;
     }
     
 }

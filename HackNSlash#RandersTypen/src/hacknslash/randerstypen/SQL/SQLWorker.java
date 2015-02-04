@@ -54,13 +54,5 @@ public class SQLWorker {
         }
         System.out.println("Connection terminated...");
     }
-    
-    public void Load() {
-    
-    }
-    
-    public void Save() {
-    
-    }
 }
  
