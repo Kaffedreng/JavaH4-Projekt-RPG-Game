@@ -19,21 +19,23 @@ import java.util.logging.Logger;
 public class FileWorker {
     
     public static ArrayList<ArrayList<String>> Load(int MapLevel) {
-        ArrayList MapList = null;
-        
+        ArrayList<ArrayList<String>> MapArray = new ArrayList<>();
+        ArrayList<String> Lines = null;
         try {
-            for(String line : Files.readAllLines(Paths.get("maps/map2.txt"))) {
-                ArrayList row = null;
-                
-                for(int i = 0; i <= line.length(); i++) {
-                    row.add(line.charAt(i));
-                }
-                MapList.add(row);
-            }
+            Lines = (ArrayList<String>) Files.readAllLines(Paths.get("C:/HackAndSlashMap/map2.txt"));
         } catch (IOException ex) {
             Logger.getLogger(FileWorker.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return MapList;
+        System.out.println(Lines);
+        for (String Line : Lines) {
+            ArrayList<String> row = new ArrayList<>(Line.length());
+            for(String MyChar : Line.split("")) {
+                row.add(MyChar);
+            }
+            MapArray.add(row);
+        }
+        return MapArray;
+    
     }
 }
 

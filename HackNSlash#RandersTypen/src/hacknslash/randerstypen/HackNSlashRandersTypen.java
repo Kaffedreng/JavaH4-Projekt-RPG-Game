@@ -137,6 +137,8 @@ public class HackNSlashRandersTypen {
         boolean IsAvailable = true;
         String Username = null;
         
+        System.out.println("Please type username to load from:");
+        
         do {
             try {
                 Username = ReadUsername();
