@@ -64,7 +64,6 @@ public class Player extends Entity {
     public void SetPos(String NewPos) {
         LastPos = CurrPos;
         CurrPos = NewPos;
-        System.out.println("New Pos");
     }
 
     void GiveExp(int MapLevel) {
@@ -80,9 +79,6 @@ public class Player extends Entity {
         
         boolean Attacking = false;
         int Damage = 0;
-        
-        //Welcome Message
-        System.out.println("Welcome, dear player!");
         
         // Choose between a new game, loading a old game or exit the game
         do {
@@ -152,7 +148,15 @@ public class Player extends Entity {
     }
 
     private int SpecialAttack() {
-        Mana =- 5;
+        Mana = Mana - 5;
         return Level * 100;
+    }
+
+    public int Mana() {
+        return Mana;
+    }
+
+    void MapLevelUp() {
+        MapLevel++;
     }
 }

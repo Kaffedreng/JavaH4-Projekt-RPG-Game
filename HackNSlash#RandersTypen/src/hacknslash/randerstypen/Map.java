@@ -10,11 +10,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -42,8 +37,7 @@ public class Map {
         boolean Answer = false;
         String NewPoss = null;
         
-        MapArray.get(x).set(y, "*");
-        System.out.println();
+        
         ArrayList<String> myPrint = new ArrayList<>();
         
         for(ArrayList<String> row : MapArray) {
@@ -59,7 +53,7 @@ public class Map {
         
         do {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Your coordinates are: " + x + "," + y );
+        System.out.println("Your coordinates are: " + x + "," + y );
 
         boolean Down  = (!"#".equals(MapArray.get(x + 1).get(y)));
         boolean Up = (!"#".equals(MapArray.get(x - 1).get(y)));
@@ -81,28 +75,28 @@ public class Map {
         }
         
             switch (result){
-                case 1:  System.out.print("Your coordinates are: " + x + "," + y );
+                case 1:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Up){
                             Answer = true;
                             x--;
                             NewPoss = x + "," + y;
                          }
                          break;
-                case 2:  System.out.print("Your coordinates are: " + x + "," + y );
+                case 2:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Down){
                             x++;
                             Answer = true;
                             NewPoss = x + "," + y;
                          }
                          break;
-                case 3:  System.out.print("Your coordinates are: " + x + "," + y );
+                case 3:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Left){
                             y--;
                             Answer = true;
                             NewPoss = x + "," + y;
                          }
                          break;
-                case 4:  System.out.print("Your coordinates are: " + x + "," + y );
+                case 4:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Right){
                             y++;
                             Answer = true;
@@ -129,8 +123,29 @@ public class Map {
         
         MapCompleted = ("c".equals(MapArray.get(x).get(y)));
         
-        System.out.println("You have swag!");
+        if(MapCompleted) {
+            System.out.println("You have completed this level!! - Congratulations...");
+            Helpers.Seperator();
+        }
         
         return MapCompleted;
+    }
+    
+    public void SetStar(String Position, String LastPosition) {
+        
+        
+        int OldY = 0;
+        int OldX = 0;
+        String[] OldXY = LastPosition.split(",");
+        OldX = Integer.parseInt(OldXY[0]);
+        OldY = Integer.parseInt(OldXY[1]);
+        MapArray.get(OldX).set(OldY, " ");
+        
+        int y = 0;
+        int x = 0;
+        String[] XY = Position.split(",");
+        x = Integer.parseInt(XY[0]);
+        y = Integer.parseInt(XY[1]);
+        MapArray.get(x).set(y, "X");
     }
 }

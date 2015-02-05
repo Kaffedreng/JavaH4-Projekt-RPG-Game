@@ -22,4 +22,16 @@ public class Helpers {
         Random Rnd = new Random();
         return Rnd.nextBoolean();
     }
+    
+    public static void Clean() {
+        for(int i = 0; i <= 100; i++) {
+            System.out.println();
+        }
+    }
+    
+    public static void Seperator() {
+        System.out.println();
+        System.out.println("-------------------------------------------");
+        System.out.println();
+    }
 }

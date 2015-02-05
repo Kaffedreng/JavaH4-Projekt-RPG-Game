@@ -58,15 +58,16 @@ public class HackNSlashRandersTypen {
             }
             
             switch (result){
-                case 1:  StartGame();
-                         break;
-                case 2:  LoadGame();
-                         break;
-                case 3:  quitGame = true;
-                         break;
+                case 1: StartGame();
+                        break;
+                case 2: LoadGame();
+                        break;
+                case 3: quitGame = true;
+                        System.out.println("Bye! - see you soon!");
+                        break;
                 default:
-                         System.out.println("Your input is not valid! - Please try again.");
-                         break;
+                        System.out.println("Your input is not valid! - Please try again.");
+                        break;
             }
         } while (!quitGame);
         
@@ -127,7 +128,7 @@ public class HackNSlashRandersTypen {
                     PlayerDetails.get(5).toString(),
                     PlayerDetails.get(6).toString());
             
-            
+            Helpers.Clean();
         } catch (SQLException ex) {
             Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -154,71 +155,107 @@ public class HackNSlashRandersTypen {
     }
 
     private static void GameLoop() {
-        do {
         Map CurrentMap = new Map(MyPlayer.MapLevel());
+        do {
             try {
                 InMapLoop(CurrentMap);
             } catch (IOException ex) {
                 Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
             }
+            MyPlayer.MapLevelUp();
+            System.out.println("Map level has changed!");
+            System.out.println("Map level has changed!");
+            System.out.println("Map level has changed!");
+            System.out.println("Map level has changed!");
+            System.out.println("Map level has changed!");
+            
+            Helpers.Seperator();
+            
+            CurrentMap = new Map(MyPlayer.MapLevel());
         } while(true);
     }
 
     private static void InMapLoop(Map CurrentMap) throws IOException {
         boolean MapNotFinished = true;
+        CurrentMap.SetStar(MyPlayer.CurrPos(), MyPlayer.CurrPos());
         do {
             MyPlayer.SetPos(CurrentMap.Move(MyPlayer.CurrPos()));
-            System.out.println(MyPlayer.LastPos());
-            boolean Win = false;
+            Helpers.Clean();
+            boolean Win = true;
             if(!Helpers.RndBool()) {
-                System.out.println("Combat mode initiated");
-                if(CombatMode()) {
-                    MyPlayer.GiveExp(MyPlayer.MapLevel());
-                }
-                else {
+                Helpers.Clean();
+                if(!CombatMode()) {
+                    CurrentMap.SetStar(MyPlayer.GetLastPos(), MyPlayer.CurrPos());
                     MyPlayer.SetPos(MyPlayer.GetLastPos());
                     MyPlayer.MaxHealth();
+                    System.out.println("Player lose");
+                    Win = false;
+                }
+                else {
+                    Helpers.Clean();
+                    System.out.println("Player won");
+                    Helpers.Seperator();
+                    MyPlayer.GiveExp(MyPlayer.MapLevel());
                 }
             }
-            MapNotFinished = !CurrentMap.HasChest(MyPlayer.CurrPos());
+            if(Win) {
+                    MapNotFinished = !CurrentMap.HasChest(MyPlayer.CurrPos());
+                    CurrentMap.SetStar(MyPlayer.CurrPos(), MyPlayer.GetLastPos());
+            }
+                
             MyPlayer.RegenHealth();
         } while(MapNotFinished);
         MyPlayer.GiveExp((MyPlayer.MapLevel() +10) * 2);
     }
-    
-
 
     //not yet finished
     private static boolean CombatMode() {
+        Helpers.Clean();
+        System.out.println("Player HP: " + MyPlayer.Health());
+        System.out.println("Player Mana: " + MyPlayer.Mana());
         boolean PlayerAttackFirst = Helpers.RndBool();
         System.out.println("Player attacks first: " + PlayerAttackFirst);
         boolean MonsterDied = false;
         
         int Damage = 0;
         Monster MyMonster = new Monster(MyPlayer.MapLevel());
-        System.out.println(MyMonster.EntityName);
+        System.out.println("You are now fighting: " + MyMonster.EntityName);
+        System.out.println("With: " + MyMonster.Health() + " HP");
+        Helpers.Seperator();
         
-        if(true) {
-        //if(!PlayerAttackFirst) {
+        if(!PlayerAttackFirst) {
             System.out.println("Monster Attacks");
             Damage = MyMonster.Attack();
             MyPlayer.DamageTaken(Damage);
-            System.out.println("Monster damage:" + Damage);
+            System.out.println("Damage from " + MyMonster.EntityName + ": " + Damage);
+            MonsterDied = (MyPlayer.Health() <= 0);
+            System.out.println("Player HP: " + MyPlayer.Health());
+            Helpers.Seperator();
         }
-        System.out.println("Combat loop");
-        do {
-           Damage = 0;
-           Damage = MyPlayer.Attack();
-           System.out.println("Damage to monster:" + Damage);
-           MyMonster.DamageTaken(Damage);
-           MonsterDied = (MyMonster.Health() <= 0);
-           if(!MonsterDied) {
-               Damage = 0;
-               Damage = MyMonster.Attack();
-               MyPlayer.DamageTaken(Damage);
-               MonsterDied = (MyPlayer.Health() <= 0);
-           }
-        } while(!MonsterDied);
+        if(!MonsterDied) {
+            do {
+                Damage = 0;
+                System.out.println("Player HP: " + MyPlayer.Health());
+                System.out.println("Player Mana: " + MyPlayer.Mana());
+                Damage = MyPlayer.Attack();
+                Helpers.Seperator();
+                System.out.println("Player Attacks");
+                System.out.println("Damage to monster: " + Damage);
+                MyMonster.DamageTaken(Damage);
+                MonsterDied = (MyMonster.Health() <= 0);
+                System.out.println(MyMonster.EntityName + " HP: " + MyMonster.Health());
+                Helpers.Seperator();
+                if(!MonsterDied) {
+                    Damage = 0;
+                    Damage = MyMonster.Attack();
+                    MyPlayer.DamageTaken(Damage);
+                    System.out.println("Damage from " + MyMonster.EntityName + ": " + Damage);
+                    MonsterDied = (MyPlayer.Health() <= 0);
+                    System.out.println("Player HP: " + MyPlayer.Health());
+                    Helpers.Seperator();
+               }
+            } while(!MonsterDied);
+        }
         return (MyPlayer.Health() > 0);
     }  
 }

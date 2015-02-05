@@ -19,17 +19,18 @@ import java.util.logging.Logger;
 public class FileWorker {
     
     public static ArrayList<ArrayList<String>> Load(int MapLevel) {
+        //as we only have 2 maps max maplevel is 2
+        MapLevel = (MapLevel <= 2 && MapLevel >= 1) ? MapLevel : 2;
         ArrayList<ArrayList<String>> MapArray = new ArrayList<>();
         ArrayList<String> Lines = null;
         try {
-            Lines = (ArrayList<String>) Files.readAllLines(Paths.get("C:/HackAndSlashMap/map2.txt"));
+            Lines = (ArrayList<String>) Files.readAllLines(Paths.get("C:/HackAndSlashMap/map" + Integer.toString(MapLevel) + ".txt"));
         } catch (IOException ex) {
             Logger.getLogger(FileWorker.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
         for (String Line : Lines) {
-            System.out.println(Line);
             ArrayList<String> row = new ArrayList<>(Line.length());
             for(String MyChar : Line.split("")) {
                 row.add(MyChar);
