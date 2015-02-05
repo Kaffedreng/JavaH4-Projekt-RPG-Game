@@ -202,8 +202,9 @@ public class HackNSlashRandersTypen {
                     MapNotFinished = !CurrentMap.HasChest(MyPlayer.CurrPos());
                     CurrentMap.SetStar(MyPlayer.CurrPos(), MyPlayer.GetLastPos());
             }
-                
-            MyPlayer.RegenHealth();
+            if (MyPlayer.Health != MyPlayer.MaxHealth) {
+                MyPlayer.RegenHealth();
+            }
         } while(MapNotFinished);
         MyPlayer.GiveExp((MyPlayer.MapLevel() +10) * 2);
     }
@@ -211,16 +212,22 @@ public class HackNSlashRandersTypen {
     //not yet finished
     private static boolean CombatMode() {
         Helpers.Clean();
+        
         System.out.println("Player HP: " + MyPlayer.Health());
         System.out.println("Player Mana: " + MyPlayer.Mana());
+        System.out.println("Player Level: " + MyPlayer.Level());
+        System.out.println("Player Experience: " + MyPlayer.Exp);
+        
         boolean PlayerAttackFirst = Helpers.RndBool();
         System.out.println("Player attacks first: " + PlayerAttackFirst);
+        
         boolean MonsterDied = false;
         
         int Damage = 0;
         Monster MyMonster = new Monster(MyPlayer.MapLevel());
         System.out.println("You are now fighting: " + MyMonster.EntityName);
-        System.out.println("With: " + MyMonster.Health() + " HP");
+        System.out.println("HP: " + MyMonster.Health());
+        
         Helpers.Seperator();
         
         if(!PlayerAttackFirst) {

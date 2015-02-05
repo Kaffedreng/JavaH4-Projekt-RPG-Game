@@ -24,7 +24,7 @@ public class Helpers {
     }
     
     public static void Clean() {
-        for(int i = 0; i <= 100; i++) {
+        for(int i = 0; i <= 25; i++) {
             System.out.println();
         }
     }

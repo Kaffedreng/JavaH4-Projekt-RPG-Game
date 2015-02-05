@@ -35,7 +35,7 @@ public class Map {
         
         int result;
         boolean Answer = false;
-        String NewPoss = null;
+        String NewPos = null;
         
         
         ArrayList<String> myPrint = new ArrayList<>();
@@ -79,28 +79,28 @@ public class Map {
                          if(Up){
                             Answer = true;
                             x--;
-                            NewPoss = x + "," + y;
+                            NewPos = x + "," + y;
                          }
                          break;
                 case 2:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Down){
                             x++;
                             Answer = true;
-                            NewPoss = x + "," + y;
+                            NewPos = x + "," + y;
                          }
                          break;
                 case 3:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Left){
                             y--;
                             Answer = true;
-                            NewPoss = x + "," + y;
+                            NewPos = x + "," + y;
                          }
                          break;
                 case 4:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Right){
                             y++;
                             Answer = true;
-                            NewPoss = x + "," + y;
+                            NewPos = x + "," + y;
                          }
                          break;
                 default:
@@ -110,7 +110,7 @@ public class Map {
         } while(!Answer);
 
        
-        return NewPoss;
+        return NewPos;
     }
 
     boolean HasChest(String CurrPos) {

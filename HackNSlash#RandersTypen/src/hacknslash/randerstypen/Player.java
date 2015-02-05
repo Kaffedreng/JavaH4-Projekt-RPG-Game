@@ -40,6 +40,7 @@ public class Player extends Entity {
         this.CurrPos = CurrPosition;
         this.Health = Integer.parseInt(Health);
         this.Mana = Integer.parseInt(Mana);
+        this.MaxHealth = 10;
     }
     public int MapLevel() {
         return MapLevel;
@@ -67,10 +68,12 @@ public class Player extends Entity {
     }
 
     void GiveExp(int MapLevel) {
-        this.Exp = MapLevel * 25;
-        if(this.Level * 100 < this.Exp) {
-            this.Level = this.Level + 1;
+        this.Exp = Exp + MapLevel * 25;
+        if(this.Level * 100 <= this.Exp) {
+            this.Level++;
             this.Exp = 0;
+            this.MaxHealth++;
+            System.out.println("Level up!");
         }
     }
     
@@ -115,10 +118,8 @@ public class Player extends Entity {
                         Attacking = true;
                         break;
                     case 4:  if (Mana >= 5) { 
-                            System.out.println("BITCH MODE ACTIVATED!!!!");
                             Damage = SpecialAttack();
                             Attacking = true; 
-                            System.out.println("BITCHING IS DONE!!!!");
                         }
                         break;
                     default:
@@ -143,7 +144,10 @@ public class Player extends Entity {
     }
     
     private int AttackHeal() {
-        Health = Health + 1;
+        if (Health != MaxHealth) {
+            Health++;
+        }
+        // Return 0 because of 0 damage given when healing
         return 0;
     }
 
