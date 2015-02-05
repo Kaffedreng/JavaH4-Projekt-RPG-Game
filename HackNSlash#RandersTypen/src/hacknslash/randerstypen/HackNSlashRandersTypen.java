@@ -6,9 +6,7 @@
 //#Randerstypen
 package hacknslash.randerstypen;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import hacknslash.randerstypen.SQL.SQLInsert;
@@ -23,21 +21,19 @@ import java.util.ArrayList;
 public class HackNSlashRandersTypen {
 
     /**
-     * @param args the command line arguments
+     * Creates new Player
      */
-    //Global variabels
-    static Player MyPlayer = null;
+    private static Player MyPlayer = null;
     
     /**
      *
-     * @param args
+     * @param args the command line arguments
      * @throws IOException
      * @throws SQLException
      */
     public static void main(String[] args) throws IOException, SQLException {
         
         //Variabels
-        
         boolean quitGame = false;
         
         //Welcome Message
@@ -45,18 +41,17 @@ public class HackNSlashRandersTypen {
         
         // Choose between a new game, loading a old game or exit the game
         do {
+            int result;
+            String line;
+            
             System.out.println("Choose an option:");
             System.out.println("1. New game");
             System.out.println("2. Load game");
             System.out.println("3. Quit game");
             
-            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-            
-            int Choise = 0;
-            
             // Read line and try to call parseInt on it.
-	    String line = in.readLine();
-	    int result;
+	    line = Helpers.Read();
+
 	    try {
 		result = Integer.parseInt(line);
 	    } catch (NumberFormatException exception) {
@@ -64,30 +59,34 @@ public class HackNSlashRandersTypen {
             }
             
             switch (result){
-                case 1: StartGame();
+                case 1: NewUser();
                         break;
                 case 2: LoadGame();
                         break;
                 case 3: quitGame = true;
-                        System.out.println("Bye! - see you soon!");
+                        System.out.println("Bye! - See you soon!");
                         break;
                 default:
                         System.out.println("Your input is not valid! - Please try again.");
                         break;
             }
         } while (!quitGame);
-        
     }
     
-    private static void StartGame() throws SQLException {
+    /**
+     * Creates a new user and adds it to the SQL Database
+     * Then it loads the game with the username
+     * @throws SQLException 
+     */
+    private static void NewUser() throws SQLException {
         
-        String Username = null;
+        String Username = "";
         boolean IsAvailable = false;
         
         do {
             try {
                 System.out.println("Type username:");
-                Username = ReadUsername();
+                Username = Helpers.Read();
             } catch (IOException ex) {
                 Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -100,14 +99,15 @@ public class HackNSlashRandersTypen {
             SQLInsert SQLInsertUser = new SQLInsert(SQLStatement_AddUser);
         }
         
-        LoadGame(Username);
+        InitGame(Username);
     }
     
-    private static String ReadUsername() throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        return in.readLine();
-    }
-    
+    /**
+     * Checks if username exists in database
+     * @param Username
+     * @returns true if username is available
+     * @throws SQLException 
+     */
     private static boolean CheckUsername(String Username) throws SQLException {
         boolean UsernameAvailable = false;
 
@@ -120,7 +120,11 @@ public class HackNSlashRandersTypen {
         return UsernameAvailable;
     }
     
-    private static void LoadGame(String Username) {
+    /**
+     * Initializing Game and collects data about the user from the database
+     * @param Username 
+     */
+    private static void InitGame(String Username) {
         try {
             String SQLStatement_GetDetails = "SELECT Name, Level, Experience, MapLevel, CurrentPosition, Health, Mana FROM players WHERE Name='" + Username + "' LIMIT 1;";
             
@@ -141,15 +145,21 @@ public class HackNSlashRandersTypen {
         GameLoop();
     }
     
+    /**
+     * Starts a new game if the username does exists in the Database and
+     * LoadGame is chosen in Main
+     * @throws IOException
+     * @throws SQLException 
+     */
     private static void LoadGame() throws IOException, SQLException {
         boolean IsAvailable = true;
-        String Username = null;
+        String Username = "";
         
         System.out.println("Please type username to load from:");
         
         do {
             try {
-                Username = ReadUsername();
+                Username = Helpers.Read();
             } catch (IOException ex) {
                 Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -157,33 +167,44 @@ public class HackNSlashRandersTypen {
             IsAvailable = CheckUsername(Username);
         } while(IsAvailable);
         
-        LoadGame(Username);
+        InitGame(Username);
     }
-
+    
+    /**
+     * Game loop, it opens a new level when another map is completed
+     */
     private static void GameLoop() {
         Map CurrentMap = new Map(MyPlayer.MapLevel());
         do {
             try {
-                InMapLoop(CurrentMap);
+                MapLoop(CurrentMap);
             } catch (IOException ex) {
                 Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
             }
+            
             MyPlayer.MapLevelUp();
+            
             System.out.println("Map level has changed!");
             System.out.println("Map level has changed!");
             System.out.println("Map level has changed!");
             System.out.println("Map level has changed!");
             System.out.println("Map level has changed!");
             
-            Helpers.Seperator();
+            Helpers.Separator();
             
             CurrentMap = new Map(MyPlayer.MapLevel());
         } while(true);
     }
 
-    private static void InMapLoop(Map CurrentMap) throws IOException {
+    /**
+     * This loop keeps running until level is completed
+     * @param CurrentMap Map Level
+     * @throws IOException 
+     */
+    private static void MapLoop(Map CurrentMap) throws IOException {
         boolean MapNotFinished = true;
         CurrentMap.SetStar(MyPlayer.CurrPos(), MyPlayer.CurrPos());
+        
         do {
             MyPlayer.SetPos(CurrentMap.Move(MyPlayer.CurrPos()));
             Helpers.Clean();
@@ -191,8 +212,8 @@ public class HackNSlashRandersTypen {
             if(!Helpers.RndBool()) {
                 Helpers.Clean();
                 if(!CombatMode()) {
-                    CurrentMap.SetStar(MyPlayer.GetLastPos(), MyPlayer.CurrPos());
-                    MyPlayer.SetPos(MyPlayer.GetLastPos());
+                    CurrentMap.SetStar(MyPlayer.LastPos(), MyPlayer.CurrPos());
+                    MyPlayer.SetPos(MyPlayer.LastPos());
                     MyPlayer.MaxHealth();
                     System.out.println("Player lose");
                     Win = false;
@@ -200,13 +221,13 @@ public class HackNSlashRandersTypen {
                 else {
                     Helpers.Clean();
                     System.out.println("Player won");
-                    Helpers.Seperator();
+                    Helpers.Separator();
                     MyPlayer.GiveExp(MyPlayer.MapLevel());
                 }
             }
             if(Win) {
                     MapNotFinished = !CurrentMap.HasChest(MyPlayer.CurrPos());
-                    CurrentMap.SetStar(MyPlayer.CurrPos(), MyPlayer.GetLastPos());
+                    CurrentMap.SetStar(MyPlayer.CurrPos(), MyPlayer.LastPos());
             }
             if (MyPlayer.Health != MyPlayer.MaxHealth) {
                 MyPlayer.RegenHealth();
@@ -214,8 +235,11 @@ public class HackNSlashRandersTypen {
         } while(MapNotFinished);
         MyPlayer.GiveExp((MyPlayer.MapLevel() +10) * 2);
     }
-
-    //not yet finished
+    
+    /**
+     * Initializing combat if a monster has been spotted
+     * @returns if the player won or not
+     */
     private static boolean CombatMode() {
         Helpers.Clean();
         
@@ -234,7 +258,7 @@ public class HackNSlashRandersTypen {
         System.out.println("You are now fighting: " + MyMonster.EntityName);
         System.out.println("HP: " + MyMonster.Health());
         
-        Helpers.Seperator();
+        Helpers.Separator();
         
         if(!PlayerAttackFirst) {
             System.out.println("Monster Attacks");
@@ -243,7 +267,7 @@ public class HackNSlashRandersTypen {
             System.out.println("Damage from " + MyMonster.EntityName + ": " + Damage);
             MonsterDied = (MyPlayer.Health() <= 0);
             System.out.println("Player HP: " + MyPlayer.Health());
-            Helpers.Seperator();
+            Helpers.Separator();
         }
         if(!MonsterDied) {
             do {
@@ -251,13 +275,13 @@ public class HackNSlashRandersTypen {
                 System.out.println("Player HP: " + MyPlayer.Health());
                 System.out.println("Player Mana: " + MyPlayer.Mana());
                 Damage = MyPlayer.Attack();
-                Helpers.Seperator();
+                Helpers.Separator();
                 System.out.println("Player Attacks");
                 System.out.println("Damage to monster: " + Damage);
                 MyMonster.DamageTaken(Damage);
                 MonsterDied = (MyMonster.Health() <= 0);
                 System.out.println(MyMonster.EntityName + " HP: " + MyMonster.Health());
-                Helpers.Seperator();
+                Helpers.Separator();
                 if(!MonsterDied) {
                     Damage = 0;
                     Damage = MyMonster.Attack();
@@ -265,7 +289,7 @@ public class HackNSlashRandersTypen {
                     System.out.println("Damage from " + MyMonster.EntityName + ": " + Damage);
                     MonsterDied = (MyPlayer.Health() <= 0);
                     System.out.println("Player HP: " + MyPlayer.Health());
-                    Helpers.Seperator();
+                    Helpers.Separator();
                }
             } while(!MonsterDied);
         }

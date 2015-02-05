@@ -5,6 +5,9 @@
  */
 package hacknslash.randerstypen;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Random;
 
 /**
@@ -14,9 +17,9 @@ import java.util.Random;
 public class Helpers {
     
     /**
-     *
+     * Calculates a number for i that is used in various methods in the game
      * @param i
-     * @return
+     * @returns i
      */
     public static int RndInt(int i) {
         Random rand = new Random();
@@ -24,8 +27,19 @@ public class Helpers {
     }
     
     /**
-     *
-     * @return
+     * Read line made easy.. 
+     * E.g. String X = Helpers.Read();
+     * @returns user input from console
+     * @throws IOException 
+     */
+    public static String Read() throws IOException {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        return in.readLine();
+    }
+    
+    /**
+     * Calculates a random number (0,1) that is used in various methods in the game
+     * @returns randomly 0 or 1
      */
     public static boolean RndBool() {
         Random Rnd = new Random();
@@ -33,7 +47,7 @@ public class Helpers {
     }
     
     /**
-     *
+     * Clears view in the console by 25 white spaces
      */
     public static void Clean() {
         for(int i = 0; i <= 25; i++) {
@@ -42,9 +56,9 @@ public class Helpers {
     }
     
     /**
-     *
+     * Sets a separator for visual goods
      */
-    public static void Seperator() {
+    public static void Separator() {
         System.out.println();
         System.out.println("-------------------------------------------");
         System.out.println();

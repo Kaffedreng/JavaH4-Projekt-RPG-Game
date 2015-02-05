@@ -18,44 +18,51 @@ public class Entity {
     String EntityName;
 
     /**
-     *
+     * Sets Maximum Health
      */
     public void MaxHealth() {
         this.Health = MaxHealth;
     }
     
     /**
-     *
-     * @return
+     * Attack for entity
+     * @returns Damage from damage calculator
      */
     public int Attack() {
         return DamageCalculator();
     }
     
     /**
-     *
-     * @return
+     * Health pool
+     * @returns health from either entity or player
      */
     public int Health() {
         return Health;
     }
     
     /**
-     *
-     * @return
+     * Level
+     * @returns level from either entity or player
      */
     public int Level() {
         return Level;
     }
     
+    /**
+     * Damage calculator for damage done to player from entity
+     * @returns damage for entity
+     */
     int DamageCalculator() {
         int Damage = Helpers.RndInt(Level + Helpers.RndInt(5));
         return Damage;
     }
 
-    void DamageTaken(int Damage) {
+    /**
+     * Reduces health depending on damage done from either entity or player
+     * @param Damage 
+     */
+    public void DamageTaken(int Damage) {
         Health = Health - Damage;
     }
-    
 }
 

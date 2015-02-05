@@ -19,21 +19,17 @@ public class Map {
     ArrayList<ArrayList<String>> MapArray = null;
 
     /**
-     *
-     * @param MapLevel
+     * Constructs the map from the FileWorker
+     * @param MapLevel The map you want to load
      */
     public Map(int MapLevel) {
-        
         MapArray = FileWorker.Load(MapLevel);
-      
-        //need file reader for this to work and some maps
-        //magical stuff makes this work! now questions asked please...
     }
     
     /**
-     *
-     * @param CurrPoss
-     * @return
+     * Makes the user able to move around in the map.
+     * @param CurrPoss Current position is used for checking valid moves
+     * @return New position
      * @throws IOException
      */
     public String Move(String CurrPoss) throws IOException {
@@ -63,28 +59,28 @@ public class Map {
         }
         
         do {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Your coordinates are: " + x + "," + y );
+            BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("Your coordinates are: " + x + "," + y );
 
-        boolean Down  = (!"#".equals(MapArray.get(x + 1).get(y)));
-        boolean Up = (!"#".equals(MapArray.get(x - 1).get(y)));
-        boolean Right = (!"#".equals(MapArray.get(x).get(y + 1)));
-        boolean Left = (!"#".equals(MapArray.get(x).get(y - 1)));
-        
-        //print user optioens
-        System.out.println((Up) ? "1. You can go up" : "1. You cannot go up");
-        System.out.println((Down) ? "2. You can go down" : "2. You cannot go down");
-        System.out.println((Left) ? "3. You can go left" : "3. You cannot go left");
-        System.out.println((Right) ? "4. You can go right" : "4. You cannot go right");
-        
-        String line = in.readLine();
-        
-        try {
-            result = Integer.parseInt(line);
-        } catch (NumberFormatException exception) {
-            result = 0;
-        }
-        
+            boolean Down  = (!"#".equals(MapArray.get(x + 1).get(y)));
+            boolean Up = (!"#".equals(MapArray.get(x - 1).get(y)));
+            boolean Right = (!"#".equals(MapArray.get(x).get(y + 1)));
+            boolean Left = (!"#".equals(MapArray.get(x).get(y - 1)));
+
+            //print user optioens
+            System.out.println((Up) ? "1. You can go up" : "1. You cannot go up");
+            System.out.println((Down) ? "2. You can go down" : "2. You cannot go down");
+            System.out.println((Left) ? "3. You can go left" : "3. You cannot go left");
+            System.out.println((Right) ? "4. You can go right" : "4. You cannot go right");
+
+            String line = in.readLine();
+
+            try {
+                result = Integer.parseInt(line);
+            } catch (NumberFormatException exception) {
+                result = 0;
+            }
+
             switch (result){
                 case 1:  System.out.println("Your coordinates are: " + x + "," + y );
                          if(Up){
@@ -119,12 +115,17 @@ public class Map {
                          break;
             }
         } while(!Answer);
-
        
         return NewPos;
     }
 
-    boolean HasChest(String CurrPos) {
+    /**
+     * Checks if the map is completed - only if the current position is a C
+     * @param CurrPos The current position
+     * @return bool for map completion
+     */
+    
+    public boolean HasChest(String CurrPos) {
         boolean MapCompleted = false;
         
         String[] XY = CurrPos.split(",");
@@ -136,20 +137,18 @@ public class Map {
         
         if(MapCompleted) {
             System.out.println("You have completed this level!! - Congratulations...");
-            Helpers.Seperator();
+            Helpers.Separator();
         }
         
         return MapCompleted;
     }
     
     /**
-     *
-     * @param Position
-     * @param LastPosition
+     * Sets the X in the map (Represents player) and cleaning the old X
+     * @param Position The position for new X
+     * @param LastPosition The position for current X, that will be removed
      */
     public void SetStar(String Position, String LastPosition) {
-        
-        
         int OldY = 0;
         int OldX = 0;
         String[] OldXY = LastPosition.split(",");

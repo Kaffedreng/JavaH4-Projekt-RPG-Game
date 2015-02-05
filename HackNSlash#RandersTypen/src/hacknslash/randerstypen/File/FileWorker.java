@@ -19,9 +19,11 @@ import java.util.logging.Logger;
 public class FileWorker {
     
     /**
-     *
-     * @param MapLevel
-     * @return
+     * Returns the map from a text file into a multi dimensional array
+     * and load new maps by the MapLevel
+     * 
+     * @param MapLevel The map you want to load
+     * @return MapArray
      */
     public static ArrayList<ArrayList<String>> Load(int MapLevel) {
         //as we only have 2 maps max maplevel is 2
@@ -33,7 +35,6 @@ public class FileWorker {
         } catch (IOException ex) {
             Logger.getLogger(FileWorker.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         
         for (String Line : Lines) {
             ArrayList<String> row = new ArrayList<>(Line.length());

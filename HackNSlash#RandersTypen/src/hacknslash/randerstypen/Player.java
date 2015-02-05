@@ -46,23 +46,15 @@ public class Player extends Entity {
 
     /**
      *
-     * @return
+     * @returns Map Level
      */
     public int MapLevel() {
         return MapLevel;
     }
-
-    /**
-     *
-     * @return
-     */
-    public String GetLastPos() {
-        return LastPos;
-    }
     
     /**
      *
-     * @return
+     * @returns Last Position
      */
     public String LastPos() {
         return LastPos;
@@ -70,18 +62,23 @@ public class Player extends Entity {
     
     /**
      *
-     * @return
+     * @returns Current Position
      */
     public String CurrPos() {
         return CurrPos;
     }
-
-    void RegenHealth() {
+    
+    /**
+     * 
+     * @returns AttackHeal (Regenerate x health)
+     */
+    public void RegenHealth() {
         AttackHeal();
     }
 
     /**
-     *
+     * Sets new position and saves current as last position
+     * 
      * @param NewPos
      */
     public void SetPos(String NewPos) {
@@ -89,7 +86,12 @@ public class Player extends Entity {
         CurrPos = NewPos;
     }
 
-    void GiveExp(int MapLevel) {
+    /**
+     * Gives experience
+     * @param MapLevel Map Level
+     */
+    
+    public void GiveExp(int MapLevel) {
         this.Exp = Exp + MapLevel * 25;
         if(this.Level * 100 <= this.Exp) {
             this.Level++;
@@ -99,9 +101,13 @@ public class Player extends Entity {
         }
     }
     
+    
+    /**
+     * Calculate damage depending on chosen attack style
+     * @returns damage done to entity
+     */
      @Override
      int DamageCalculator() {
-        
         boolean Attacking = false;
         int Damage = 0;
         
@@ -116,13 +122,10 @@ public class Player extends Entity {
                     System.out.println("4. Magic");
                 }
                 
-                BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-                
-                int AttackStyle = 0;
-                
-                // Read line and try to call parseInt on it.
-                String line = in.readLine();
+                int AttackStyle = 0;                
+                String line = Helpers.Read();
                 int result;
+                
                 try {
                     result = Integer.parseInt(line);
                 } catch (NumberFormatException exception) {
@@ -157,14 +160,26 @@ public class Player extends Entity {
         return Damage;
     }
     
+    /**
+     * Damage from Punch Style
+     * @returns calculated damage
+     */
     private int AttackPunch() {
         return Level * 20;
     }
     
+    /**
+     * Damage from Kick Style
+     * @returns calculated damage
+     */
     private int AttackKick() {
         return Level * Helpers.RndInt(35);
     }
     
+    /**
+     * Heal player
+     * @returns 0 damage
+     */
     private int AttackHeal() {
         if (Health != MaxHealth) {
             Health++;
@@ -172,21 +187,28 @@ public class Player extends Entity {
         // Return 0 because of 0 damage given when healing
         return 0;
     }
-
+    
+    /**
+     * Damage from Special attack Style
+     * @returns calculated damage
+     */
     private int SpecialAttack() {
         Mana = Mana - 5;
         return Level * 100;
     }
 
     /**
-     *
-     * @return
+     * Mana pool
+     * @returns Mana
      */
     public int Mana() {
         return Mana;
     }
 
-    void MapLevelUp() {
+    /**
+     * Counts MapLevel up so that a new level can be loaded
+     */
+    public void MapLevelUp() {
         MapLevel++;
     }
 }

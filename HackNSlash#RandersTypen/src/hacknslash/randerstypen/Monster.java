@@ -12,8 +12,8 @@ package hacknslash.randerstypen;
 public class Monster extends Entity {
 
     /**
-     *
-     * @param MapLevel
+     * This creates the monster for combat mode
+     * @param MapLevel Map Level
      */
     public Monster(int MapLevel) {
         this.EntityName = "Pikachu";
