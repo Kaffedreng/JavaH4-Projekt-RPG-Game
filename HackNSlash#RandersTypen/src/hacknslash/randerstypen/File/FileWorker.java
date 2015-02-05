@@ -31,7 +31,7 @@ public class FileWorker {
         ArrayList<ArrayList<String>> MapArray = new ArrayList<>();
         ArrayList<String> Lines = null;
         try {
-            Lines = (ArrayList<String>) Files.readAllLines(Paths.get("src/hacknslash/randerstypen/maps/map" + Integer.toString(MapLevel) + ".txt"));
+            Lines = (ArrayList<String>) Files.readAllLines(Paths.get("src\\hacknslash\\randerstypen\\maps\\map" + Integer.toString(MapLevel) + ".txt"));
         } catch (IOException ex) {
             Logger.getLogger(FileWorker.class.getName()).log(Level.SEVERE, null, ex);
         }
