@@ -163,4 +163,20 @@ public class Map {
         y = Integer.parseInt(XY[1]);
         MapArray.get(x).set(y, "X");
     }
+
+    void PlaceC(String Position, String LastPosition) {
+                int OldY = 0;
+        int OldX = 0;
+        String[] OldXY = LastPosition.split(",");
+        OldX = Integer.parseInt(OldXY[0]);
+        OldY = Integer.parseInt(OldXY[1]);
+        MapArray.get(OldX).set(OldY, "c");
+        
+        int y = 0;
+        int x = 0;
+        String[] XY = Position.split(",");
+        x = Integer.parseInt(XY[0]);
+        y = Integer.parseInt(XY[1]);
+        MapArray.get(x).set(y, "X");
+    }
 }

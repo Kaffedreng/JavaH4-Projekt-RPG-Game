@@ -8,6 +8,7 @@ package hacknslash.randerstypen;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 /**
@@ -210,5 +211,19 @@ public class Player extends Entity {
      */
     public void MapLevelUp() {
         MapLevel++;
+    }
+
+    public ArrayList<String> Save() {
+        ArrayList<String> SaveArray = new ArrayList<>();
+        
+        SaveArray.add(EntityName);
+        SaveArray.add(Integer.toString(Level));
+        SaveArray.add(Integer.toString(Exp));
+        SaveArray.add(Integer.toString(MapLevel));
+        SaveArray.add(CurrPos);
+        SaveArray.add(Integer.toString(Health));
+        SaveArray.add(Integer.toString(Mana));
+        
+        return SaveArray;
     }
 }

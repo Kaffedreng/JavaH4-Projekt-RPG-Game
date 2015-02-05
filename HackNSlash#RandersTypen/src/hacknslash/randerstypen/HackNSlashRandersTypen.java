@@ -190,6 +190,12 @@ public class HackNSlashRandersTypen {
             System.out.println("Map level has changed!");
             System.out.println("Map level has changed!");
             
+            try {
+                SQLInsert SQLSave = new SQLInsert(MyPlayer.Save());
+            } catch (SQLException ex) {
+                Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
             Helpers.Separator();
             
             CurrentMap = new Map(MyPlayer.MapLevel());
@@ -212,7 +218,12 @@ public class HackNSlashRandersTypen {
             if(!Helpers.RndBool()) {
                 Helpers.Clean();
                 if(!CombatMode()) {
-                    CurrentMap.SetStar(MyPlayer.LastPos(), MyPlayer.CurrPos());
+                    if(CurrentMap.HasChest(MyPlayer.CurrPos())) {
+                        CurrentMap.PlaceC(MyPlayer.LastPos(), MyPlayer.CurrPos());
+                    }
+                    else {
+                        CurrentMap.SetStar(MyPlayer.LastPos(), MyPlayer.CurrPos());
+                    }
                     MyPlayer.SetPos(MyPlayer.LastPos());
                     MyPlayer.MaxHealth();
                     System.out.println("Player lose");
