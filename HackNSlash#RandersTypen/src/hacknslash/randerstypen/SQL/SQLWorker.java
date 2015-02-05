@@ -26,8 +26,15 @@ public class SQLWorker {
     static final String USER = "root";
     static final String PASS = "admin";
     static Connection conn = null;
+
+    /**
+     *
+     */
     public ArrayList<ArrayList<String>> ResultListOfLists = new ArrayList<ArrayList<String>>();
     
+    /**
+     *
+     */
     public void SQLConn(){
         
         try {
@@ -46,6 +53,9 @@ public class SQLWorker {
         System.out.println("Connected...");
     }
     
+    /**
+     *
+     */
     public void SQLDisconnect(){
         try {
             conn.close();

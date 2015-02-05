@@ -17,6 +17,11 @@ import java.util.ArrayList;
  */
 public class Map {
     ArrayList<ArrayList<String>> MapArray = null;
+
+    /**
+     *
+     * @param MapLevel
+     */
     public Map(int MapLevel) {
         
         MapArray = FileWorker.Load(MapLevel);
@@ -25,6 +30,12 @@ public class Map {
         //magical stuff makes this work! now questions asked please...
     }
     
+    /**
+     *
+     * @param CurrPoss
+     * @return
+     * @throws IOException
+     */
     public String Move(String CurrPoss) throws IOException {
         int y = 0;
         int x = 0;
@@ -131,6 +142,11 @@ public class Map {
         return MapCompleted;
     }
     
+    /**
+     *
+     * @param Position
+     * @param LastPosition
+     */
     public void SetStar(String Position, String LastPosition) {
         
         

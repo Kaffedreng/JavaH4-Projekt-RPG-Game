@@ -28,6 +28,12 @@ public class HackNSlashRandersTypen {
     //Global variabels
     static Player MyPlayer = null;
     
+    /**
+     *
+     * @param args
+     * @throws IOException
+     * @throws SQLException
+     */
     public static void main(String[] args) throws IOException, SQLException {
         
         //Variabels

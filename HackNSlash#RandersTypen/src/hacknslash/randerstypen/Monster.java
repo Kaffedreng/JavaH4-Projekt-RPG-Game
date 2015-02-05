@@ -11,6 +11,10 @@ package hacknslash.randerstypen;
  */
 public class Monster extends Entity {
 
+    /**
+     *
+     * @param MapLevel
+     */
     public Monster(int MapLevel) {
         this.EntityName = "Pikachu";
         this.Level = MapLevel + Helpers.RndInt(5);

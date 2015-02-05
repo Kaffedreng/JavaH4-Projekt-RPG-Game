@@ -16,7 +16,12 @@ import java.util.ArrayList;
  */
 public class SQLSelect extends SQLWorker {
     
-        public SQLSelect(String SQLStatement) throws SQLException{
+    /**
+     *
+     * @param SQLStatement
+     * @throws SQLException
+     */
+    public SQLSelect(String SQLStatement) throws SQLException{
         SQLConn();
         Statement stmt = null;
         ResultSet Result = null;

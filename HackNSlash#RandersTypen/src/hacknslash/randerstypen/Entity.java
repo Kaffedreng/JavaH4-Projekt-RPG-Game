@@ -5,8 +5,6 @@
  */
 package hacknslash.randerstypen;
 
-import java.util.Random;
-
 /**
  *
  * @author jan
@@ -19,18 +17,33 @@ public class Entity {
     int MaxHealth;
     String EntityName;
 
+    /**
+     *
+     */
     public void MaxHealth() {
         this.Health = MaxHealth;
     }
     
+    /**
+     *
+     * @return
+     */
     public int Attack() {
         return DamageCalculator();
     }
     
+    /**
+     *
+     * @return
+     */
     public int Health() {
         return Health;
     }
     
+    /**
+     *
+     * @return
+     */
     public int Level() {
         return Level;
     }

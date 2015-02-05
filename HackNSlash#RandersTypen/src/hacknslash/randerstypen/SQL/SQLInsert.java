@@ -14,6 +14,11 @@ import java.sql.Statement;
  */
 public class SQLInsert extends SQLWorker {
 
+    /**
+     *
+     * @param SQLStatement
+     * @throws SQLException
+     */
     public SQLInsert(String SQLStatement) throws SQLException {
         SQLConn();
         Statement stmt = null;

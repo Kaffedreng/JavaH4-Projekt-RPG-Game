@@ -18,6 +18,11 @@ import java.util.logging.Logger;
  */
 public class FileWorker {
     
+    /**
+     *
+     * @param MapLevel
+     * @return
+     */
     public static ArrayList<ArrayList<String>> Load(int MapLevel) {
         //as we only have 2 maps max maplevel is 2
         MapLevel = (MapLevel <= 2 && MapLevel >= 1) ? MapLevel : 2;

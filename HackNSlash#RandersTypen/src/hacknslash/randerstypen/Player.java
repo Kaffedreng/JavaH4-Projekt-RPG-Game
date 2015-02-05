@@ -31,6 +31,7 @@ public class Player extends Entity {
      * @param MapLevel
      * @param CurrPosition
      * @param Health
+     * @param Mana
      */
     public Player(String Name, String Level, String Experience, String MapLevel, String CurrPosition, String Health, String Mana) {
         this.EntityName = Name;
@@ -42,18 +43,35 @@ public class Player extends Entity {
         this.Mana = Integer.parseInt(Mana);
         this.MaxHealth = 10;
     }
+
+    /**
+     *
+     * @return
+     */
     public int MapLevel() {
         return MapLevel;
     }
 
+    /**
+     *
+     * @return
+     */
     public String GetLastPos() {
         return LastPos;
     }
     
+    /**
+     *
+     * @return
+     */
     public String LastPos() {
         return LastPos;
     }
     
+    /**
+     *
+     * @return
+     */
     public String CurrPos() {
         return CurrPos;
     }
@@ -62,6 +80,10 @@ public class Player extends Entity {
         AttackHeal();
     }
 
+    /**
+     *
+     * @param NewPos
+     */
     public void SetPos(String NewPos) {
         LastPos = CurrPos;
         CurrPos = NewPos;
@@ -156,6 +178,10 @@ public class Player extends Entity {
         return Level * 100;
     }
 
+    /**
+     *
+     * @return
+     */
     public int Mana() {
         return Mana;
     }

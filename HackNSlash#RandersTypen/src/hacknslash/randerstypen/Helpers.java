@@ -13,22 +13,37 @@ import java.util.Random;
  */
 public class Helpers {
     
+    /**
+     *
+     * @param i
+     * @return
+     */
     public static int RndInt(int i) {
         Random rand = new Random();
         return rand.nextInt(i);
     }
     
+    /**
+     *
+     * @return
+     */
     public static boolean RndBool() {
         Random Rnd = new Random();
         return Rnd.nextBoolean();
     }
     
+    /**
+     *
+     */
     public static void Clean() {
         for(int i = 0; i <= 25; i++) {
             System.out.println();
         }
     }
     
+    /**
+     *
+     */
     public static void Seperator() {
         System.out.println();
         System.out.println("-------------------------------------------");
