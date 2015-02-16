@@ -5,9 +5,11 @@
  */
 package hacknslash.randerstypen;
 
+import hacknslash.randerstypen.SQL.SQLSelect;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.SQLException;
 import java.util.Random;
 
 /**
@@ -62,5 +64,24 @@ public class Helpers {
         System.out.println();
         System.out.println("-------------------------------------------");
         System.out.println();
+    }
+    
+        
+    /**
+     * Checks if username exists in database
+     * @param Username
+     * @return true if username is available
+     * @throws SQLException 
+     */
+    public static boolean CheckUsername(String Username) throws SQLException {
+        boolean UsernameAvailable = false;
+
+        System.out.println("Choose a username:");
+
+        String SQLStatement_Check = "SELECT Name FROM players WHERE Name='" + Username + "' LIMIT 1;";
+        SQLSelect SQLReturn = new SQLSelect(SQLStatement_Check);
+        UsernameAvailable = (SQLReturn.ResultListOfLists.size() < 1 );
+        
+        return UsernameAvailable;
     }
 }

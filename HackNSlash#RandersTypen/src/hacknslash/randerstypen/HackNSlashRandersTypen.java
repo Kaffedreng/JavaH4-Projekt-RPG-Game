@@ -20,10 +20,7 @@ import java.util.ArrayList;
  */
 public class HackNSlashRandersTypen {
 
-    /**
-     * Creates new Player
-     */
-    private static Player MyPlayer = null;
+    private static Player MyPlayer;
     
     /**
      *
@@ -91,7 +88,7 @@ public class HackNSlashRandersTypen {
                 Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            IsAvailable = CheckUsername(Username);
+            IsAvailable = Helpers.CheckUsername(Username);
         } while(!IsAvailable);
                 
         if(Username != null) {
@@ -100,24 +97,6 @@ public class HackNSlashRandersTypen {
         }
         
         InitGame(Username);
-    }
-    
-    /**
-     * Checks if username exists in database
-     * @param Username
-     * @returns true if username is available
-     * @throws SQLException 
-     */
-    private static boolean CheckUsername(String Username) throws SQLException {
-        boolean UsernameAvailable = false;
-
-        System.out.println("Choose a username:");
-
-        String SQLStatement_Check = "SELECT Name FROM players WHERE Name='" + Username + "' LIMIT 1;";
-        SQLSelect SQLReturn = new SQLSelect(SQLStatement_Check);
-        UsernameAvailable = (SQLReturn.ResultListOfLists.size() < 1 );
-        
-        return UsernameAvailable;
     }
     
     /**
@@ -164,7 +143,7 @@ public class HackNSlashRandersTypen {
                 Logger.getLogger(HackNSlashRandersTypen.class.getName()).log(Level.SEVERE, null, ex);
             }
 
-            IsAvailable = CheckUsername(Username);
+            IsAvailable = Helpers.CheckUsername(Username);
         } while(IsAvailable);
         
         InitGame(Username);
@@ -306,4 +285,8 @@ public class HackNSlashRandersTypen {
         }
         return (MyPlayer.Health() > 0);
     }  
+
+    public HackNSlashRandersTypen() {
+        this.MyPlayer = null;
+    }
 }
