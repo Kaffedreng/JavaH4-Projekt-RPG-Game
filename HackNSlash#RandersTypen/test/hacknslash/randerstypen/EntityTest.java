@@ -44,9 +44,11 @@ public class EntityTest {
     public void testMaxHealth() {
         System.out.println("MaxHealth");
         Entity instance = new Entity();
+        instance.Health = 0;
+        instance.MaxHealth = 20;
         instance.MaxHealth();
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(20, instance.Health);
     }
 
     /**
@@ -56,11 +58,9 @@ public class EntityTest {
     public void testAttack() {
         System.out.println("Attack");
         Entity instance = new Entity();
-        int expResult = 1;
-        int result = instance.Attack(1);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.Attack();
+        Object result = instance.Attack();
+        assertTrue(result instanceof Integer);
     }
 
     /**
@@ -70,11 +70,9 @@ public class EntityTest {
     public void testHealth() {
         System.out.println("Health");
         Entity instance = new Entity();
-        int expResult = 0;
-        int result = instance.Health();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.Health = 10;
+        Object result = instance.Health();
+        assertEquals(result, 10);
     }
 
     /**
@@ -84,11 +82,9 @@ public class EntityTest {
     public void testLevel() {
         System.out.println("Level");
         Entity instance = new Entity();
-        int expResult = 0;
-        int result = instance.Level();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.Level = 10;
+        Object result = instance.Level();
+        assertEquals(10, result);
     }
 
     /**
@@ -99,10 +95,9 @@ public class EntityTest {
         System.out.println("DamageCalculator");
         Entity instance = new Entity();
         int expResult = 1;
-        int result = 1;
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Object result = 1;
+        assertTrue(result instanceof Integer);
+        
     }
 
     /**
@@ -111,11 +106,10 @@ public class EntityTest {
     @Test
     public void testDamageTaken() {
         System.out.println("DamageTaken");
-        int Damage = 0;
+        Object Damage = 0;
         Entity instance = new Entity();
-        instance.DamageTaken(Damage);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        instance.DamageTaken((int) Damage);
+        assertTrue(Damage instanceof Integer);
     }
     
 }
